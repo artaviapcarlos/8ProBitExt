@@ -44,16 +44,20 @@ genCode(Out, num(N)) :- !, genCode(Out, atom(N))
 .
 genCode(Out, oper(N)) :- !, genCode(Out, atom(N))
 .
+genCode(Out, statement(N)) :- !,
+    genCodeList(Out, [N])
+. %falta algo?
+
 genCode(Out, operation(O, L, R)) :- !,
     genCodeList(Out, [L, O, R])
-	
+
 .
 genCode(Out, empty) :- !,  format(Out, '; ', [])
 .
 
 genCode(Out, assign(I, E)) :-  !,
    genCode(Out, operation(oper('='), I, E))
-   
+
 .
 genCode(Out, return(E)) :- !, format(Out, 'return ', []),
                               genCode(Out, E)
@@ -64,7 +68,11 @@ genCodeList(Out, L) :- genCodeList(Out, L, ' ')
 .
 genCodeList(_, [], _).
 genCodeList(Out, [C], _) :- genCode(Out, C).
-genCodeList(Out, [X, Y | L], Sep) :- genCode(Out, X), 
+genCodeList(Out, [X, Y | L], Sep) :- genCode(Out, X),
                                 format(Out, '~a', [Sep]),
                                 genCodeList(Out, [Y | L], Sep)
+.
+
+genCodePrint(Out,N) :- !, %genCode para print_string, print_boolean, print_number
+    format(atom(Out),'console.log(~w);', [N])
 .

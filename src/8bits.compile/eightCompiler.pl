@@ -19,7 +19,7 @@ compile(InPath, _, Filename) :-
    format('*** File Not found :"~a" *** ~n', [PathInFile]),
    fail
 .
-compile(Filename) :- compile('cases/', 'output/', Filename)
+compile(Filename) :- compile('cases_sprint_01/', 'output/', Filename)
 .
 % Demo test case
 compile :- compile('mini.8bit')
